@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "983364169929",
+    "project_id": "gatifymusic",
+    "storage_bucket": "gatifymusic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983364169929:android:a34162388d97b158645d18",
+        "android_client_info": {
+          "package_name": "com.dungps19554.gatifymusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "983364169929-ljq7h1u8b4296plts8khokkfs0ucim9e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaDRXWHDmRrxwA5WaViUlJgPNzH_nc9vs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "983364169929-ljq7h1u8b4296plts8khokkfs0ucim9e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
