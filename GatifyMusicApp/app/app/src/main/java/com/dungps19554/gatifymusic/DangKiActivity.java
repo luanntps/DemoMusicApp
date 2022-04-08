@@ -1,7 +1,6 @@
 package com.dungps19554.gatifymusic;
 
 import android.content.Intent;
-
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Pattern;
 
@@ -73,25 +71,25 @@ public class DangKiActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        User user=new User(username,password,email);
+                                       /* User user=new User(username,password,email);
                                         FirebaseDatabase.getInstance("https://gatifymusic-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Users")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if(task.isSuccessful()){
-                                                    Toast.makeText(DangKiActivity.this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
+                                        */            Toast.makeText(DangKiActivity.this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
                                                     pbProgress.setVisibility(View.GONE);
                                                     edtRgEmail.setText("");
                                                     edtRgUsername.setText("");
                                                     edtRgPassword.setText("");
-                                                }
+                                       /*         }
                                                 else {
                                                     Toast.makeText(DangKiActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
                                                     pbProgress.setVisibility(View.GONE);
                                                 }
                                             }
-                                        });
+                                        });*/
                                     } else {
                                         Toast.makeText(DangKiActivity.this, "Tài khoản hoặc Email đã tồn tại hoặc vui lòng kiểm tra lại kết nối mạng.", Toast.LENGTH_SHORT).show();
                                         pbProgress.setVisibility(View.GONE);

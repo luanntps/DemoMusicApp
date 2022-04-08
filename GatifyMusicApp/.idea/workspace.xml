@@ -11,9 +11,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="26MzD4MtjJ5oLPWY7UlLas2CAKz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -42,9 +43,10 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="223" y="87" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.864@0.0.1536.864" timestamp="1647248215223" />
-    <state x="549" y="187" key="FileChooserDialogImpl" timestamp="1647618650653">
-      <screen x="0" y="0" width="1536" height="864" />
+    <state x="549" y="177" key="FileChooserDialogImpl" timestamp="1649226982420">
+      <screen x="0" y="0" width="1536" height="816" />
     </state>
+    <state x="549" y="177" key="FileChooserDialogImpl/0.0.1536.816@0.0.1536.816" timestamp="1649226982420" />
     <state x="549" y="187" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1647618650653" />
     <state x="249" y="7" key="SettingsEditor" timestamp="1647248242703">
       <screen x="0" y="0" width="1536" height="864" />

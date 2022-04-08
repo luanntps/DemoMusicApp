@@ -19,7 +19,6 @@ import com.dungps19554.gatifymusic.User_Activity;
 import com.dungps19554.gatifymusic.adapter.RecycleBaiHatAdapter;
 import com.dungps19554.gatifymusic.adapter.RecycleNgheSiAdapter;
 import com.dungps19554.gatifymusic.model.BaiHat;
-import com.dungps19554.gatifymusic.model.NgheSi;
 
 import java.util.ArrayList;
 

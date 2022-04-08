@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dungps19554.gatifymusic.R;
-import com.dungps19554.gatifymusic.model.NgheSi;
 
 import java.util.ArrayList;
 

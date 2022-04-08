@@ -3,8 +3,6 @@ package com.dungps19554.gatifymusic;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,11 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import  com.dungps19554.gatifymusic.fragment.*;
-import com.dungps19554.gatifymusic.fragment.bxh_fragment;
+import com.dungps19554.gatifymusic.fragment.*  ;
 import com.dungps19554.gatifymusic.fragment.home_fragment;
-import com.dungps19554.gatifymusic.fragment.live_fragment;
-import com.dungps19554.gatifymusic.fragment.search_fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
