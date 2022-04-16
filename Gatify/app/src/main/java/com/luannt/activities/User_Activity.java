@@ -1,4 +1,4 @@
-package com.luannt;
+package com.luannt.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
+
+import com.luannt.R;
 
 public class User_Activity extends FragmentActivity {
 

@@ -1,4 +1,4 @@
-package com.luannt;
+package com.luannt.activities;
 
 
 import android.annotation.SuppressLint;
@@ -28,6 +28,7 @@ import com.bumptech.glide.RequestBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.luannt.R;
 import com.luannt.adapter.ViewPagerAdapter;
 import com.luannt.model.Song;
 import com.luannt.service.ServiceAPI;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         getListSong();
 
         sharedPref= this.getSharedPreferences("CurrentSongPreferences", Context.MODE_PRIVATE);
-
+        //tạo luồng cho media
         this.runOnUiThread(new Thread(new Runnable() {
             @Override
             public void run() {
@@ -136,7 +137,46 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }));
+        //sự kiện cho seekBar
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                if(mediaPlayer!=null && fromUser){
+                    tvCurrentTime.setText(convertToMMSS(progress+""));
+                    tvSheetCurrentTime.setText(convertToMMSS(progress+""));
+                    mediaPlayer.seekTo(progress);
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
 
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        sheetSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+                if(mediaPlayer!=null && fromUser){
+                    tvCurrentTime.setText(convertToMMSS(progress+""));
+                    tvSheetCurrentTime.setText(convertToMMSS(progress+""));
+                    mediaPlayer.seekTo(progress);
+                }
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        //sự kiện cho bottom sheet
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         playBar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //sự kiện ViewPager
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -230,8 +270,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleErrorSong(Throwable error) {
         Toast.makeText(this,"failed",Toast.LENGTH_SHORT).show();
     }
-    //
-
+    //đổi ms sang mm:ss
     @SuppressLint("DefaultLocale")
     public String convertToMMSS(String duration){
         Long millis =Long.parseLong(duration);
@@ -239,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
                 TimeUnit.MILLISECONDS.toMinutes(millis)%TimeUnit.HOURS.toMinutes(1),
                 TimeUnit.MILLISECONDS.toSeconds(millis)%TimeUnit.MINUTES.toSeconds(1));
     }
-
+    //chức năng của mediaPLayer
     private void SkipPrevious(){
         int position=sharedPref.getInt("songPosition",0);
         if(position>0) {
@@ -255,7 +294,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void Previous(){
-
+        int time=mediaPlayer.getCurrentPosition()-15000;
+        mediaPlayer.seekTo(time);
     }
     private void Play(){
         mediaPlayer.reset();
@@ -290,7 +330,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void Next(){
-
+        int time=mediaPlayer.getCurrentPosition()+15000;
+        mediaPlayer.seekTo(time);
     }
     private void SkipNext(){
         int position=sharedPref.getInt("songPosition",0);
@@ -304,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
             editor.commit();
         }
     }
+    //Nhận data của song được chọn
     void receiveData(){
         String urlCurrentMedia=sharedPref.getString("urlCurrentMedia",null);
         String urlCurrentPic=sharedPref.getString("urlCurrentPic",null);
@@ -324,6 +366,7 @@ public class MainActivity extends AppCompatActivity {
                 && currentSongLyrics!=null)
         currentSong = new Song(Integer.parseInt(currentID),currentSongName,Integer.parseInt(currentViewCount),currentSongLyrics,urlCurrentPic,urlCurrentMedia,Integer.parseInt(currentSongGenreID));
     }
+    //gắn info của song được chọn vào shared referene
     void setCurrentSong(){
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("urlCurrentMedia", currentSong.getUrl_media()+"");
@@ -334,6 +377,5 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("currentSongGenreID",currentSong.getGenre_id()+"");
         editor.putString("currentSongLyrics",currentSong.getLyrics()+"");
         editor.commit();
-
     }
 }

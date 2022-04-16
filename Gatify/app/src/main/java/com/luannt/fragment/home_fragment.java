@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.luannt.R;
-import com.luannt.User_Activity;
+import com.luannt.activities.User_Activity;
 import com.luannt.adapter.RecycleListSongAdapter;
 import com.luannt.adapter.RecycleSongAdapter;
 import com.luannt.helpers.RecyclerItemClickListener;

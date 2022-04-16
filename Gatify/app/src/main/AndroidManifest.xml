@@ -15,14 +15,14 @@
         android:fullBackupOnly="true"
         >
         <activity
-            android:name=".QuenMatKhauActivity"
+            android:name=".activities.QuenMatKhauActivity"
             android:exported="false"/>
         <activity
-            android:name=".DangKiActivity"
+            android:name=".activities.DangKiActivity"
             android:exported="false"
             />
         <activity
-            android:name=".DangNhapActivity"
+            android:name=".activities.DangNhapActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -32,16 +32,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ThongTin_Activity"
+            android:name=".activities.ThongTin_Activity"
             android:exported="false" />
         <activity
-            android:name=".DoiPass_Activity"
+            android:name=".activities.DoiPass_Activity"
             android:exported="false" />
         <activity
-            android:name=".User_Activity"
+            android:name=".activities.User_Activity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="false">
 
 

@@ -1,4 +1,4 @@
-package com.luannt;
+package com.luannt.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.luannt.R;
 
 import java.util.regex.Pattern;
 
@@ -38,7 +39,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuenMatKhauActivity.this, com.luannt.DangNhapActivity.class);
+                Intent intent = new Intent(QuenMatKhauActivity.this, DangNhapActivity.class);
                 startActivity(intent);
             }
         });

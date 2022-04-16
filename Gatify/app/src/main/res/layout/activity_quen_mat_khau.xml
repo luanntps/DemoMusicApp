@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/layout_bg"
-    tools:context=".QuenMatKhauActivity">
+    tools:context=".activities.QuenMatKhauActivity">
 
     <TextView
         android:layout_marginTop="200dp"

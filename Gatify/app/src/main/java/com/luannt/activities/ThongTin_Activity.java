@@ -1,4 +1,4 @@
-package com.luannt;
+package com.luannt.activities;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.luannt.R;
 
 public class ThongTin_Activity extends AppCompatActivity {
 
