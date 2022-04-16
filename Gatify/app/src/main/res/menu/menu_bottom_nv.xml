@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/it_home"
+        android:title="Home"
+        android:icon="@mipmap/home"/>
+
+    <item android:id="@+id/it_bxh"
+        android:title="BXH"
+        android:icon="@mipmap/top"/>
+
+    <item android:id="@+id/it_live"
+        android:title="Live"
+        android:icon="@mipmap/live"/>
+
+    <item android:id="@+id/it_search"
+        android:title="Search"
+        android:icon="@mipmap/search"/>
+</menu>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:text="Bạn muốn đăng xuất tài khoản này"
+        android:layout_marginBottom="15dp"
+        />
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/DangXuatDialog"
+        android:layout_width="196dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:gravity="right"
+        android:text="ĐĂNG XUẤT"
+        android:textColor="#F30808" />
+
+    <TextView
+        android:id="@+id/Thoatdx"
+        android:layout_width="156dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="THOÁT"
+        android:textColor="@color/white" />
+</LinearLayout>
+
+
+</LinearLayout>

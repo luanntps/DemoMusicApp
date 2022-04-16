@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "204920956701",
+    "project_id": "gatifymusic-5ae81",
+    "storage_bucket": "gatifymusic-5ae81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204920956701:android:c7507b16782e582593e3f4",
+        "android_client_info": {
+          "package_name": "com.dungps19554.gatifymusic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204920956701-pvl1r7fkgi1bhg6hetl56t051s7k12b9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo5wU07X8dnC8tc6OeHH5QQw5sZYP4Hko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204920956701-pvl1r7fkgi1bhg6hetl56t051s7k12b9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204920956701:android:0d0e0960d18af97c93e3f4",
+        "android_client_info": {
+          "package_name": "com.luannt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204920956701-pvl1r7fkgi1bhg6hetl56t051s7k12b9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo5wU07X8dnC8tc6OeHH5QQw5sZYP4Hko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204920956701-pvl1r7fkgi1bhg6hetl56t051s7k12b9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
