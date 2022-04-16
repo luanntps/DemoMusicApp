@@ -62,16 +62,16 @@ namespace Gatify_API.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    return Ok("Thêm sản phẩm không thành công");
+                    return Ok();
                 }
                 gatifyEntities.gatifyUsers.Add(u);
                 gatifyEntities.SaveChanges();
             }
             catch (Exception)
             {
-                return Ok("Thêm sản phẩm không thành công");
+                return Ok();
             }
-            return Ok("Thêm sản phẩm thành công");
+            return Ok();
         }
         [HttpPost]
         public IHttpActionResult UpdateProfilePic(string url, string email)
