@@ -9,8 +9,7 @@ namespace Gatify_API.Models
     [Table("sosteam.playlistManager")]
     public partial class playlistManager
     {
-        [Key]
-        public int no { get; set; }
+        public int id { get; set; }
 
         public int id_playlist { get; set; }
 

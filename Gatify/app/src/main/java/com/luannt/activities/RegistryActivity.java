@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class DangKiActivity extends AppCompatActivity {
+public class RegistryActivity extends AppCompatActivity {
     TextView tvBack;
     EditText edtRgUsername,edtRgPassword,edtRgEmail;
     Button btnRegistration;
@@ -53,7 +53,7 @@ public class DangKiActivity extends AppCompatActivity {
         tvBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DangKiActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegistryActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -92,7 +92,7 @@ public class DangKiActivity extends AppCompatActivity {
                                         */
                                         User user=new User(username,email,"no","01-01-0001","https://i.ibb.co/JByPCsZ/avt.png");
                                         createUser(user);
-                                        Toast.makeText(DangKiActivity.this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegistryActivity.this,"Đăng ký thành công",Toast.LENGTH_SHORT).show();
                                         pbProgress.setVisibility(View.GONE);
                                         edtRgEmail.setText("");
                                         edtRgUsername.setText("");
@@ -105,7 +105,7 @@ public class DangKiActivity extends AppCompatActivity {
                                             }
                                         });*/
                                     } else {
-                                        Toast.makeText(DangKiActivity.this, "Tài khoản hoặc Email đã tồn tại hoặc vui lòng kiểm tra lại kết nối mạng.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(RegistryActivity.this, "Tài khoản hoặc Email đã tồn tại hoặc vui lòng kiểm tra lại kết nối mạng.", Toast.LENGTH_SHORT).show();
                                         pbProgress.setVisibility(View.GONE);
                                     }
                                 }

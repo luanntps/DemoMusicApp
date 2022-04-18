@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.luannt.R;
 
-public class ThongTin_Activity extends AppCompatActivity {
+public class UserInformationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class ThongTin_Activity extends AppCompatActivity {
         avt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(ThongTin_Activity.this);
+                Dialog dialog = new Dialog(UserInformationActivity.this);
                 dialog.setContentView(R.layout.doiavt_layout);
                 dialog.show();
             }

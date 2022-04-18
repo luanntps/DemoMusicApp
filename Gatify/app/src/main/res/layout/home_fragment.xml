@@ -41,7 +41,7 @@
                                             android:layout_height="wrap_content"
                                             android:text="Bài hát"
                                             android:textColor="@color/white"
-                                            android:textSize="30sp"
+                                            android:textSize="30dip"
                                             />
                                         <ImageView
                                             android:id="@+id/ivHomeDraw"
@@ -62,7 +62,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Ca sĩ"
                                     android:textColor="@color/white"
-                                    android:textSize="30sp"
+                                    android:textSize="30dip"
                                     android:layout_margin="20dp"/>
 
                                 <androidx.recyclerview.widget.RecyclerView
@@ -79,7 +79,7 @@
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/white"
                                     android:layout_margin="20dp"
-                                    android:textSize="30sp"
+                                    android:textSize="30dip"
                                     android:text="Danh sách bài hát" />
                                 <ScrollView
                                     android:layout_width="match_parent"

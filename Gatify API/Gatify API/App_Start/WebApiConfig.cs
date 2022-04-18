@@ -98,6 +98,18 @@ namespace Gatify_API
             );
 
             config.Routes.MapHttpRoute(
+                name: "CreateComment",
+                routeTemplate: "api/create-comment",
+                defaults: new { controller = "Gatify", action = "CreateComment" }
+            );
+
+            config.Routes.MapHttpRoute(
+                name: "GetAllComment",
+                routeTemplate: "api/get-all-comment",
+                defaults: new { controller = "Gatify", action = "GetAllComment" }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }

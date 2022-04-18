@@ -2,11 +2,18 @@ package com.luannt.activities;
 
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -19,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -30,7 +38,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.luannt.R;
 import com.luannt.adapter.ViewPagerAdapter;
+import com.luannt.helpers.MediaNotification;
 import com.luannt.model.Song;
+import com.luannt.service.OnClearFromRecentService;
 import com.luannt.service.ServiceAPI;
 
 import java.io.IOException;
@@ -57,13 +67,16 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Song> listSong;
 
     LinearLayout playBar;
-    LinearLayout bottomSheet;
+    CoordinatorLayout bottomSheet;
     BottomSheetBehavior bottomSheetBehavior;
 
 
     SharedPreferences sharedPref ;
     int x=0;
-    int checkSongClick;
+    int position=0;
+
+    NotificationManager notificationManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +116,13 @@ public class MainActivity extends AppCompatActivity {
 
         getListSong();
 
+        //notification cho media
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            createChannel();
+            registerReceiver(broadcastReceiver, new IntentFilter("SONGS_SONGS"));
+            startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
+        }
+        //
         sharedPref= this.getSharedPreferences("CurrentSongPreferences", Context.MODE_PRIVATE);
         //tạo luồng cho media
         this.runOnUiThread(new Thread(new Runnable() {
@@ -111,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
                 if(sharedPref.getInt("checkClick",0)==1) {
                     receiveData();
                     Play();
+                    try {
+                        MediaNotification.createNotification(MainActivity.this,currentSong,R.drawable.ic_pause,1,listSong.size()-1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 if(currentSong!=null) {
                     tvCurrentSongName.setText(currentSong.getSong_name() + "");
@@ -249,7 +274,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    // tạo notification
+    public void createChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel=new NotificationChannel(MediaNotification.CHANNEL_ID,"Gatify",NotificationManager.IMPORTANCE_LOW);
+            notificationManager=getSystemService(NotificationManager.class);
 
+            notificationManager = getSystemService(NotificationManager.class);
+            if(notificationManager != null){
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+    }
+    BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action=intent.getExtras().getString("actionname");
+
+            switch (action){
+                case MediaNotification.ACTION_PREVIOUS: {
+                    SkipPrevious();
+                    break;
+                }
+                case MediaNotification.ACTION_PLAY:{
+                    PlayPause();
+                    break;
+                }
+                case MediaNotification.ACTION_NEXT:{
+                    SkipNext();
+                    break;
+                }
+            }
+        }
+    };
     //gọi api lấy danh sách bài hát + gắn vào arraylist
     public void getListSong(){
         ServiceAPI requestInterface = new Retrofit.Builder()
@@ -326,7 +383,19 @@ public class MainActivity extends AppCompatActivity {
     private void PlayPause(){
         if(mediaPlayer.isPlaying()){
             mediaPlayer.pause();
-        }else mediaPlayer.start();
+            try {
+                MediaNotification.createNotification(MainActivity.this,currentSong,R.drawable.ic_play,1,listSong.size()-1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            mediaPlayer.start();
+            try {
+                MediaNotification.createNotification(MainActivity.this,currentSong,R.drawable.ic_pause,1,listSong.size()-1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void Next(){
@@ -343,6 +412,13 @@ public class MainActivity extends AppCompatActivity {
             setCurrentSong();
             editor.putInt("checkClick",1);
             editor.commit();
+
+            position++;
+            try {
+                MediaNotification.createNotification(MainActivity.this,currentSong,R.drawable.ic_pause,1,listSong.size()-1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     //Nhận data của song được chọn
@@ -377,5 +453,14 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("currentSongGenreID",currentSong.getGenre_id()+"");
         editor.putString("currentSongLyrics",currentSong.getLyrics()+"");
         editor.commit();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            notificationManager.cancelAll();
+        }
+        unregisterReceiver(broadcastReceiver);
     }
 }

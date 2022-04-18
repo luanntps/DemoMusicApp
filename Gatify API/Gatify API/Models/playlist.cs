@@ -15,6 +15,7 @@ namespace Gatify_API.Models
             playlistManagers = new HashSet<playlistManager>();
         }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]

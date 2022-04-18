@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/layout_bg"
-    tools:context=".activities.DangKiActivity">
+    tools:context=".activities.RegistryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

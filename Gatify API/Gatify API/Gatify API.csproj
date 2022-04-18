@@ -168,13 +168,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\artist.cs" />
+    <Compile Include="Models\comment.cs" />
     <Compile Include="Models\GatifyEntities.cs" />
     <Compile Include="Models\gatifyUser.cs" />
-    <Compile Include="Models\genre.cs" />
     <Compile Include="Models\playlist.cs" />
     <Compile Include="Models\playlistManager.cs" />
     <Compile Include="Models\song.cs" />
-    <Compile Include="Models\songManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +207,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Properties\PublishProfiles\FTPProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FTPProfile1.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

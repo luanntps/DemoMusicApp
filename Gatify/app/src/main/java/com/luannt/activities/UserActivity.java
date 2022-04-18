@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.luannt.R;
 
-public class User_Activity extends FragmentActivity {
+public class UserActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class User_Activity extends FragmentActivity {
         thongtin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(User_Activity.this,ThongTin_Activity.class);
+                Intent intent = new Intent(UserActivity.this, UserInformationActivity.class);
                 startActivity(intent);
             }
         });
@@ -30,14 +30,14 @@ public class User_Activity extends FragmentActivity {
         doipass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(User_Activity.this,DoiPass_Activity.class);
+                Intent intent = new Intent(UserActivity.this, ChangePasswordActivity.class);
                 startActivity(intent);
             }
         });
         dangxuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dialog dialog = new Dialog(User_Activity.this);
+                Dialog dialog = new Dialog(UserActivity.this);
                 dialog.setContentView(R.layout.dangxuat_layout);
                 dialog.show();
             }

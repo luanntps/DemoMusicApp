@@ -44,7 +44,7 @@ namespace Gatify_API.Controllers
         {
             using(var context=new GatifyEntities())
             {
-                var playlists = context.playlists.SqlQuery("Select *from playlists where email=@email", new SqlParameter("@email", email)).ToList<playlist>;
+                var playlists = context.playlists.SqlQuery("Select *from playlist where email=@email", new SqlParameter("@email", email)).ToList<playlist>;
                 return Ok(playlists);
 
             }
@@ -158,10 +158,33 @@ namespace Gatify_API.Controllers
                 return Ok();
             }
         }
-        [HttpGet]
-        public IHttpActionResult GetAllGenre()
+        [HttpPost]
+        public IHttpActionResult CreateComment(comment comment)
         {
-            return Ok(gatifyEntities.genres.ToList());
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Ok();
+                }
+                gatifyEntities.comments.Add(comment);
+                gatifyEntities.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return Ok();
+            }
+            return Ok();
+        }
+        [HttpGet]
+        public IHttpActionResult GetAllComment(int id_song)
+        {
+            using (var context = new GatifyEntities())
+            {
+                var comments = context.comments.SqlQuery("Select *from user where id_song=@id_song", new SqlParameter("@id_song", id_song)).ToList<comment>;
+                return Ok(comments);
+
+            }
         }
     }
 }

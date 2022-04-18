@@ -79,7 +79,7 @@
             android:layout_marginStart="-30dp"
             android:text="Nếu chưa có tài khoản"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15dip" />
 
         <TextView
             android:clickable="true"
@@ -92,7 +92,7 @@
             android:textColor="#1CE6ED"
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="30dp"
-            android:textSize="17sp"
+            android:textSize="17dip"
             android:focusable="true" />
     </FrameLayout>
 

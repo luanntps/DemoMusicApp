@@ -21,7 +21,7 @@ import com.luannt.R;
 
 import java.util.regex.Pattern;
 
-public class QuenMatKhauActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity {
     EditText edtFgEmail;
     Button btnHuy, btnTimKiem;
     Context context;
@@ -39,7 +39,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
         btnHuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(QuenMatKhauActivity.this, DangNhapActivity.class);
+                Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -65,7 +65,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         progressBar.setVisibility(View.INVISIBLE);
-                        AlertDialog.Builder dialog = new AlertDialog.Builder(QuenMatKhauActivity.this);
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(ForgotPasswordActivity.this);
                         LayoutInflater inflater = getLayoutInflater();
                         View view = inflater.inflate(R.layout.dialog_notification, null);
                         Button btnOkay=view.findViewById(R.id.btnOkay);
@@ -80,7 +80,7 @@ public class QuenMatKhauActivity extends AppCompatActivity {
                         });
                     }else{
                         progressBar.setVisibility(View.INVISIBLE);
-                        Toast.makeText(QuenMatKhauActivity.this,"Email không tồn tại hoặc vui lòng kiểm tra kết nối mạng.",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ForgotPasswordActivity.this,"Email không tồn tại hoặc vui lòng kiểm tra kết nối mạng.",Toast.LENGTH_SHORT).show();
                     }
                 }
             });

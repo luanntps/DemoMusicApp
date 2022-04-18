@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     tools:context=".activities.MainActivity"
+    app:contentScrim="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
     >
     <LinearLayout
         android:layout_width="match_parent"

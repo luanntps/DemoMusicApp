@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/layout_bg"
-    tools:context=".activities.ThongTin_Activity">
+    tools:context=".activities.UserInformationActivity">
 
     <ImageView
         android:id="@+id/itemback"

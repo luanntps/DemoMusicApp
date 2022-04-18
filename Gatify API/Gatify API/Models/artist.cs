@@ -12,7 +12,7 @@ namespace Gatify_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public artist()
         {
-            songManagers = new HashSet<songManager>();
+            songs = new HashSet<song>();
         }
 
         public int id { get; set; }
@@ -22,7 +22,7 @@ namespace Gatify_API.Models
         public string artist_name { get; set; }
 
         [Required]
-        [StringLength(7000)]
+        [StringLength(3000)]
         public string biography { get; set; }
 
         [Required]
@@ -30,6 +30,6 @@ namespace Gatify_API.Models
         public string url_profile_pic { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<songManager> songManagers { get; set; }
+        public virtual ICollection<song> songs { get; set; }
     }
 }

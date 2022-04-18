@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.luannt.R;
-import com.luannt.activities.User_Activity;
+import com.luannt.activities.UserActivity;
 import com.luannt.adapter.RecycleListSongAdapter;
 import com.luannt.adapter.RecycleSongAdapter;
 import com.luannt.helpers.RecyclerItemClickListener;
@@ -69,7 +69,7 @@ public class home_fragment extends Fragment {
         ivHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), User_Activity.class);
+                Intent intent = new Intent(getActivity(), UserActivity.class);
                 startActivity(intent);
             }
         });

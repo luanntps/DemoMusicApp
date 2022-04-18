@@ -21,7 +21,7 @@ import com.luannt.R;
 
 import java.util.regex.Pattern;
 
-public class  DangNhapActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     TextView tvDangKi;
     EditText edtEmail,edtPassword;
     Button btnLogin;
@@ -42,7 +42,7 @@ public class  DangNhapActivity extends AppCompatActivity {
         tvDangKi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent in = new Intent(DangNhapActivity.this, DangKiActivity.class);
+                Intent in = new Intent(LoginActivity.this, RegistryActivity.class);
                 startActivity(in);
             }
         });
@@ -52,7 +52,7 @@ public class  DangNhapActivity extends AppCompatActivity {
                 tvQuenMatKhau.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(DangNhapActivity.this,QuenMatKhauActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -81,12 +81,12 @@ public class  DangNhapActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(DangNhapActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(DangNhapActivity.this, MainActivity.class);
+                                Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             } else {
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(DangNhapActivity.this, "Email hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

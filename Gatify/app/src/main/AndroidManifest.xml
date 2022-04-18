@@ -13,16 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GatifyMusic"
         android:fullBackupOnly="true"
+        tools:ignore="GoogleAppIndexingWarning"
         >
         <activity
-            android:name=".activities.QuenMatKhauActivity"
+            android:name=".activities.ForgotPasswordActivity"
             android:exported="false"/>
         <activity
-            android:name=".activities.DangKiActivity"
+            android:name=".activities.RegistryActivity"
             android:exported="false"
             />
         <activity
-            android:name=".activities.DangNhapActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true"
             >
             <intent-filter>
@@ -32,13 +33,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ThongTin_Activity"
+            android:name=".activities.UserInformationActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DoiPass_Activity"
+            android:name=".activities.ChangePasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.User_Activity"
+            android:name=".activities.UserActivity"
             android:exported="false" />
         <activity
             android:name=".activities.MainActivity"
@@ -46,6 +47,8 @@
 
 
         </activity>
+        <receiver android:name=".service.NotificationActionService"/>
+        <service android:name=".service.OnClearFromRecentService"/>
     </application>
 
 </manifest>

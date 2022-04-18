@@ -12,8 +12,8 @@ namespace Gatify_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public song()
         {
+            comments = new HashSet<comment>();
             playlistManagers = new HashSet<playlistManager>();
-            songManagers = new HashSet<songManager>();
         }
 
         public int id { get; set; }
@@ -25,7 +25,7 @@ namespace Gatify_API.Models
         public int view_count { get; set; }
 
         [Required]
-        [StringLength(7000)]
+        [StringLength(4000)]
         public string lyrics { get; set; }
 
         [Required]
@@ -36,14 +36,18 @@ namespace Gatify_API.Models
         [StringLength(255)]
         public string url_media { get; set; }
 
-        public int genre_id { get; set; }
+        [Required]
+        [StringLength(1)]
+        public string genre { get; set; }
 
-        public virtual genre genre { get; set; }
+        public int id_artist { get; set; }
+
+        public virtual artist artist { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comment> comments { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<playlistManager> playlistManagers { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<songManager> songManagers { get; set; }
     }
 }
