@@ -10,6 +10,7 @@ namespace Gatify_API.Models
         public GatifyEntities()
             : base("name=GatifyEntities5")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
 
         public virtual DbSet<artist> artists { get; set; }
