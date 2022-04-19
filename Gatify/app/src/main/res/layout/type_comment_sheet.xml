@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/black"
+    android:padding="10dp"
+    android:paddingBottom="40dp"
+    android:id="@+id/comment_sheet"
+    app:behavior_hideable="true"
+    android:visibility="gone"
+    app:contentScrim="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/avtUser"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_gravity="center"
+                android:src="@drawable/avt"
+                />
+            <EditText
+
+                android:id="@+id/edtComment"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_style1"
+                android:textSize="18dip"
+                android:backgroundTint="@color/black"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:hint="Viết bình luận..."
+                android:textColorHint="@color/white"
+                android:clickable="true"
+                >
+
+            </EditText>
+            <ImageView
+                android:layout_gravity="center"
+                android:id="@+id/btnSendComment"
+                android:layout_marginLeft="10dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_send_24"/>
+        </LinearLayout>
+    </LinearLayout>

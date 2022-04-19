@@ -2,7 +2,7 @@ package com.luannt.activities;
 
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
+import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -16,8 +16,12 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -28,6 +32,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
@@ -37,9 +43,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.luannt.R;
+import com.luannt.adapter.RecycleCommentAdapter;
 import com.luannt.adapter.ViewPagerAdapter;
 import com.luannt.helpers.MediaNotification;
+import com.luannt.model.Comment;
 import com.luannt.model.Song;
+import com.luannt.model.User;
 import com.luannt.service.OnClearFromRecentService;
 import com.luannt.service.ServiceAPI;
 
@@ -47,13 +56,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+
+    String email;
+    User currentUser;
 
     BottomNavigationView bottomNV;
     ViewPager viewPager;
@@ -66,10 +81,21 @@ public class MainActivity extends AppCompatActivity {
     Song currentSong;
     ArrayList<Song> listSong;
 
+    ArrayList<Comment> listComment;
+    RecyclerView lvComment;
+
     LinearLayout playBar;
     CoordinatorLayout bottomSheet;
-    BottomSheetBehavior bottomSheetBehavior;
+    LinearLayout commentSheet;
+    LinearLayout typeCommentSheet;
 
+    BottomSheetBehavior bottomSheetBehavior;
+    BottomSheetBehavior commentSheetBehavior;
+    TextView openComment;
+
+    EditText edtComment;
+    ImageView avtUser, imgUser;
+    ImageView btnSendComment;
 
     SharedPreferences sharedPref ;
     int x=0;
@@ -81,15 +107,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle bundle = getIntent().getExtras();
+        email = bundle.getString("useremail");
+
         viewPager=findViewById(R.id.viewPager);
-//        setSupportActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setHomeAsUpIndicator(R.drawable.ic_baseline_menu_24);
-//        actionBar.setDisplayHomeAsUpEnabled(true);
         bottomNV = findViewById(R.id.bottomnavigationView);
+
+        lvComment = findViewById(R.id.lvCommment);
+
+        imgUser=findViewById(R.id.imgUser);
+        avtUser=findViewById(R.id.avtUser);
+        btnSendComment=findViewById(R.id.btnSendComment);
+        edtComment=findViewById(R.id.edtComment);
 
         bottomSheet=findViewById(R.id.bottom_sheet_player);
         playBar=findViewById(R.id.playBar);
+        openComment=findViewById(R.id.openComment);
+        commentSheet=findViewById(R.id.comment_sheet);
+
 
         imgCurrentSongPic=findViewById(R.id.imgCurrentSongPic);
         tvCurrentTime=findViewById(R.id.tvCurrentTime);
@@ -115,6 +151,8 @@ public class MainActivity extends AppCompatActivity {
         btnSkipNext.setOnClickListener(v->SkipNext());
 
         getListSong();
+        getUserDetail(email);
+        getAllComment();
 
         //notification cho media
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
@@ -131,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 if(sharedPref.getInt("checkClick",0)==1) {
                     receiveData();
                     Play();
+                    getAllComment();
                     try {
                         MediaNotification.createNotification(MainActivity.this,currentSong,R.drawable.ic_pause,1,listSong.size()-1);
                     } catch (IOException e) {
@@ -213,6 +252,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        commentSheetBehavior = BottomSheetBehavior.from(commentSheet);
+        openComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(commentSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED){
+                    commentSheet.setVisibility(View.VISIBLE);
+                    edtComment.setEnabled(true);
+                    edtComment.requestFocus();
+                    commentSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    //tự động mở Keyboard
+                    InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                }else {
+                    commentSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
         //sự kiện ViewPager
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
@@ -234,10 +293,6 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case 2:
-                        bottomNV.getMenu().findItem(R.id.it_live).setChecked(true);
-
-                        break;
-                    case 3:
                         bottomNV.getMenu().findItem(R.id.it_search).setChecked(true);
 
                         break;
@@ -262,17 +317,31 @@ public class MainActivity extends AppCompatActivity {
                     item.setChecked(true);
                     viewPager.setCurrentItem(1);
                 }
-                if (item.getItemId() == R.id.it_live) {
-                    item.setChecked(true);
-                    viewPager.setCurrentItem(2);
-                }
                 if (item.getItemId() == R.id.it_search) {
                     item.setChecked(true);
-                    viewPager.setCurrentItem(3);
+                    viewPager.setCurrentItem(2);
                 }
                 return false;
             }
         });
+        //sự kiện cho chức năng comment
+        btnSendComment.setOnClickListener(c->sendComment());
+    }
+    //sự kiện cho nút gửi comment
+    public void sendComment(){
+        String myComment=edtComment.getText()+"";
+        if(myComment.isEmpty()){}
+        else{
+            Comment comment=new Comment(myComment,email,currentSong.getId(),currentUser.getUrl_user_pic());
+            createComment(comment);
+            Toast.makeText(MainActivity.this,"Đã đăng bình luận.",Toast.LENGTH_SHORT).show();
+            getAllComment();
+            commentSheet.setVisibility(View.GONE);
+            edtComment.setText("");
+            InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
+            edtComment.clearFocus();
+        }
     }
     // tạo notification
     public void createChannel(){
@@ -307,6 +376,89 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+    //gọi api lấy danh sách comment
+    public void getAllComment(){
+        if(currentSong==null){}
+        else {
+            ServiceAPI requestInterface = new Retrofit.Builder()
+                    .baseUrl(ServiceAPI.BASE_SERVICE)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build().create(ServiceAPI.class);
+            new CompositeDisposable()
+                    .add(requestInterface.GetAllComment(currentSong.getId())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(this::handleResponseComment, this::handleErrorComment));
+        }
+    }
+    private void handleResponseComment(ArrayList<Comment> alComment) {
+        lvComment.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(MainActivity.this, LinearLayoutManager.VERTICAL, false);
+        lvComment.setLayoutManager(manager);
+        RecycleCommentAdapter adapter = new RecycleCommentAdapter(alComment, MainActivity.this);
+        lvComment.setAdapter(adapter);
+        listComment=alComment;
+    }
+    private void handleErrorComment(Throwable error) {
+        Toast.makeText(MainActivity.this,"failed",Toast.LENGTH_SHORT).show();
+    }
+    //gọi api tạo comment
+    public void createComment(Comment comment) throws OnErrorNotImplementedException {
+
+            ServiceAPI requestInterface = new Retrofit.Builder()
+                    .baseUrl(ServiceAPI.BASE_SERVICE)
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build().create(ServiceAPI.class);
+        requestInterface.CreateComment(comment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Observer<Message>() {
+                    @Override
+                    public void onSubscribe( Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Message message) {
+
+                    }
+
+                    @Override
+                    public void onError( Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    };
+    //Lấy user hiện tại
+    public void getUserDetail(String email){
+        ServiceAPI requestInterface = new Retrofit.Builder()
+                .baseUrl(ServiceAPI.BASE_SERVICE)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build().create(ServiceAPI.class);
+        new CompositeDisposable()
+                .add(requestInterface.GetUserDetail(email)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe(this::handleResponseUser, this::handleErrorUser) );
+
+    }
+    private void handleResponseUser(User user) {
+        currentUser=user;
+        Glide.with(MainActivity.this).load(currentUser.getUrl_user_pic()).into(avtUser);
+        Glide.with(MainActivity.this).load(currentUser.getUrl_user_pic()).into(imgUser);
+    }
+    private void handleErrorUser(Throwable error) {
+        Toast.makeText(MainActivity.this,"failed",Toast.LENGTH_SHORT).show();
+    }
     //gọi api lấy danh sách bài hát + gắn vào arraylist
     public void getListSong(){
         ServiceAPI requestInterface = new Retrofit.Builder()
@@ -428,8 +580,9 @@ public class MainActivity extends AppCompatActivity {
         String currentID=sharedPref.getString("currentID",null);
         String currentViewCount=sharedPref.getString("currentViewCount",null);
         String currentSongName=sharedPref.getString("currentSongName",null);
-        String currentSongGenreID=sharedPref.getString("currentSongGenreID",null);
+        String currentSongGenreName=sharedPref.getString("currentSongGenreName",null);
         String currentSongLyrics=sharedPref.getString("currentSongLyrics",null);
+        String currentSongArtist=sharedPref.getString("currentSongArtist",null);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt("checkClick",0);
         editor.commit();
@@ -438,9 +591,10 @@ public class MainActivity extends AppCompatActivity {
                 && currentID!=null
                 && currentViewCount!=null
                 && currentSongName!=null
-                && currentSongGenreID!=null
-                && currentSongLyrics!=null)
-        currentSong = new Song(Integer.parseInt(currentID),currentSongName,Integer.parseInt(currentViewCount),currentSongLyrics,urlCurrentPic,urlCurrentMedia,Integer.parseInt(currentSongGenreID));
+                && currentSongGenreName!=null
+                && currentSongLyrics!=null
+                && currentSongArtist!=null)
+        currentSong = new Song(Integer.parseInt(currentID),currentSongName,Integer.parseInt(currentViewCount),currentSongLyrics,urlCurrentPic,urlCurrentMedia,currentSongGenreName,Integer.parseInt(currentSongArtist));
     }
     //gắn info của song được chọn vào shared referene
     void setCurrentSong(){
@@ -450,8 +604,9 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("currentID",currentSong.getId()+"");
         editor.putString("currentViewCount",currentSong.getView_count()+"");
         editor.putString("currentSongName",currentSong.getSong_name()+"");
-        editor.putString("currentSongGenreID",currentSong.getGenre_id()+"");
+        editor.putString("currentSongGenreName",currentSong.getGenre_name()+"");
         editor.putString("currentSongLyrics",currentSong.getLyrics()+"");
+        editor.putString("currentSongArtist",currentSong.getId_artist()+"");
         editor.commit();
     }
 
@@ -462,5 +617,32 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.cancelAll();
         }
         unregisterReceiver(broadcastReceiver);
+    }
+    //Custom cho nút Back
+    boolean doubleBackToExitPressedOnce = false;
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+        }
+        if(commentSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED
+                &&bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED) {
+            commentSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+        this.doubleBackToExitPressedOnce = true;
+        if(commentSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED
+                &&bottomSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED) {
+            Toast.makeText(this, "Ấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
+        }
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 1000);
     }
 }

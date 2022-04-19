@@ -8,7 +8,7 @@ namespace Gatify_API.Models
     public partial class GatifyEntities : DbContext
     {
         public GatifyEntities()
-            : base("name=GatifyEntities4")
+            : base("name=GatifyEntities5")
         {
         }
 
@@ -33,6 +33,10 @@ namespace Gatify_API.Models
 
             modelBuilder.Entity<comment>()
                 .Property(e => e.email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<comment>()
+                .Property(e => e.url_user_pic)
                 .IsUnicode(false);
 
             modelBuilder.Entity<gatifyUser>()

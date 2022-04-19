@@ -22,6 +22,9 @@ namespace Gatify_API.Models
 
         public int id_song { get; set; }
 
+        [StringLength(255)]
+        public string url_user_pic { get; set; }
+
         public virtual gatifyUser gatifyUser { get; set; }
 
         public virtual song song { get; set; }

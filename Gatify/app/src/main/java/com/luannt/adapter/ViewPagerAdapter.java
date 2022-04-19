@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.luannt.fragment.bxh_fragment;
 import com.luannt.fragment.home_fragment;
-import com.luannt.fragment.live_fragment;
 import com.luannt.fragment.search_fragment;
 
 
@@ -27,8 +26,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new bxh_fragment();
             case 2:
-                return new live_fragment();
-            case 3:
                 return new search_fragment();
             default:
                 return new home_fragment();
@@ -37,7 +34,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
 }

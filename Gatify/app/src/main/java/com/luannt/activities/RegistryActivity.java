@@ -130,7 +130,6 @@ public class RegistryActivity extends AppCompatActivity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe() );
-
     }
 
 

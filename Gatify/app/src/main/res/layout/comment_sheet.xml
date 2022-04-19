@@ -4,68 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="@color/black"
-    android:orientation="vertical">
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bình luận"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:textSize="20dip"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="550dp"
-
-        >
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/lvChatView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-    </ScrollView>
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:contentScrim="?attr/colorPrimary"
+    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        >
+        android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nhập bình luận"
-            android:layout_margin="10dp"
-            android:textColor="@color/white"/>
+            android:text="Bình luận"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="20dip"
+            android:textStyle="bold"
+           />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lvCommment"
+                android:background="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+
+                />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_gravity="bottom"
+            android:paddingLeft="3dp"
+            >
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:id="@+id/imgUser"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:src="@drawable/avt"
+                android:layout_marginLeft="5dp"
                 />
-            <EditText
-                android:id="@+id/edtComment"
+            <TextView
+                android:id="@+id/openComment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/edittext_style1"
-                android:textSize="20dip"
+                android:textSize="18dip"
+                android:padding="10dp"
+                android:textColorHint="@color/white"
+                android:backgroundTint="@color/black"
+                android:hint="Viết bình luận..."
+                android:clickable="true"
                 />
         </LinearLayout>
     </LinearLayout>

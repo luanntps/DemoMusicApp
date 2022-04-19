@@ -179,12 +179,18 @@ namespace Gatify_API.Controllers
         [HttpGet]
         public IHttpActionResult GetAllComment(int id_song)
         {
-            using (var context = new GatifyEntities())
-            {
-                var comments = context.comments.SqlQuery("Select *from user where id_song=@id_song", new SqlParameter("@id_song", id_song)).ToList<comment>;
-                return Ok(comments);
+           
+            var context = new GatifyEntities();
+            var result = from comment in context.comments
+                         where comment.id_song == id_song
+                         select comment;
 
+            List<comment> alComment = new List<comment>();
+            foreach (var comment in result)
+            {
+                alComment.Add(comment);
             }
+            return Ok(alComment);
         }
     }
 }

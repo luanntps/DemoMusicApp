@@ -26,9 +26,9 @@ namespace Gatify_API
             );
 
             config.Routes.MapHttpRoute(
-                name: "GetUserDetail2",
-                routeTemplate: "api/get-user-detail/{id}",
-                defaults: new { controller = "Gatify", action = "GetUserDetail", id = UrlParameter.Optional }
+                name: "GetUserDetail",
+                routeTemplate: "api/get-user-detail/{email}",
+                defaults: new { controller = "Gatify", action = "GetUserDetail", email= UrlParameter.Optional }
             );
 
             config.Routes.MapHttpRoute(
@@ -105,8 +105,8 @@ namespace Gatify_API
 
             config.Routes.MapHttpRoute(
                 name: "GetAllComment",
-                routeTemplate: "api/get-all-comment",
-                defaults: new { controller = "Gatify", action = "GetAllComment" }
+                routeTemplate: "api/get-all-comment/{id_song}",
+                defaults: new { controller = "Gatify", action = "GetAllComment", id_song = UrlParameter.Optional }
             );
 
             config.Routes.MapHttpRoute(

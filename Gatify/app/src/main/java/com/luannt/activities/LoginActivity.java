@@ -83,10 +83,13 @@ public class LoginActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("useremail", email);
+                                intent.putExtras(bundle);
                                 startActivity(intent);
                             } else {
                                 progressBar.setVisibility(View.GONE);
-                                Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu không hợp lệ.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Email hoặc mật khẩu không hợp lệ hoặc vui lòng kiểm tra lại kết nối mạng.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

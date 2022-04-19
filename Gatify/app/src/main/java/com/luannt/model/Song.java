@@ -7,16 +7,34 @@ public class Song {
     private String lyrics;
     private String url_song_pic;
     private String url_media;
-    private int genre_id;
+    private String genre;
+    private int id_artist;
 
-    public Song(int id, String song_name, int view_count, String lyrics, String url_song_pic, String url_media, int genre_id) {
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public int getId_artist() {
+        return id_artist;
+    }
+
+    public void setId_artist(int id_artist) {
+        this.id_artist = id_artist;
+    }
+
+    public Song(int id, String song_name, int view_count, String lyrics, String url_song_pic, String url_media, String genre, int id_artist) {
         this.id = id;
         this.song_name = song_name;
         this.view_count = view_count;
         this.lyrics = lyrics;
         this.url_song_pic = url_song_pic;
         this.url_media = url_media;
-        this.genre_id = genre_id;
+        this.genre = genre;
+        this.id_artist = id_artist;
     }
     public Song(){}
     public int getId() {
@@ -67,11 +85,11 @@ public class Song {
         this.url_media = url_media;
     }
 
-    public int getGenre_id() {
-        return genre_id;
+    public String getGenre_name() {
+        return genre;
     }
 
-    public void setGenre_id(int genre_id) {
-        this.genre_id = genre_id;
+    public void setGenre_name(String genre) {
+        this.genre = genre;
     }
 }

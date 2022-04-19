@@ -36,8 +36,7 @@ namespace Gatify_API.Models
         [StringLength(255)]
         public string url_media { get; set; }
 
-        [Required]
-        [StringLength(1)]
+        [StringLength(255)]
         public string genre { get; set; }
 
         public int id_artist { get; set; }

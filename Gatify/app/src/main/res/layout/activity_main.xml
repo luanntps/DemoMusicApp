@@ -37,5 +37,5 @@
     </LinearLayout>
     <include layout="@layout/layout_bottom_player"/>
     <include layout="@layout/layout_bottom_sheet_player" />
-
+    <include layout="@layout/type_comment_sheet"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

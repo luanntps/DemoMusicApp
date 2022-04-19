@@ -4,15 +4,9 @@
     <item android:id="@+id/it_home"
         android:title="Home"
         android:icon="@mipmap/home"/>
-
     <item android:id="@+id/it_bxh"
         android:title="BXH"
         android:icon="@mipmap/top"/>
-
-    <item android:id="@+id/it_live"
-        android:title="Live"
-        android:icon="@mipmap/live"/>
-
     <item android:id="@+id/it_search"
         android:title="Search"
         android:icon="@mipmap/search"/>

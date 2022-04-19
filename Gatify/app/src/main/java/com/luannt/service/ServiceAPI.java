@@ -2,7 +2,7 @@ package com.luannt.service;
 
 import android.os.Message;
 
-import com.luannt.model.Genre;
+import com.luannt.model.Comment;
 import com.luannt.model.Playlist;
 import com.luannt.model.Song;
 import com.luannt.model.User;
@@ -22,16 +22,19 @@ public interface ServiceAPI {
     @GET("api/get-all-user")
     Observable<ArrayList<User>> GetAllUser();
     @GET("api/get-user-detail")
-    Observable<ArrayList<User>> GetUserDetail(@Query("email") String email);
+    Observable<User> GetUserDetail(@Query("email") String email);
     @GET("api/get-all-playlist")
     Observable<ArrayList<Playlist>> GetAllPlaylist(@Query("email") String email);
     @GET("api/get-all-song")
     Observable<ArrayList<Song>> GetAllSong();
-    @GET("api/get-all-genre")
-    Observable<ArrayList<Genre>> GetAllGenre();
+    @GET("api/get-all-comment")
+    Observable<ArrayList<Comment>> GetAllComment(@Query("id_song") int id);
+
     //thao tac post
     @POST("api/create-user")
     Observable<Message> CreateUser(@Body User user);
+    @POST("api/create-comment")
+    Observable<Message> CreateComment(@Body Comment comment);
     @POST("api/update-profile-pic")
     Observable<Message> UpdateProfilePic(@Query("url") String url, @Query("email") String email);
     @POST("api/update-vip")

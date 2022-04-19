@@ -186,8 +186,9 @@ public class home_fragment extends Fragment {
         editor.putString("currentID",currentSong.getId()+"");
         editor.putString("currentViewCount",currentSong.getView_count()+"");
         editor.putString("currentSongName",currentSong.getSong_name()+"");
-        editor.putString("currentSongGenreID",currentSong.getGenre_id()+"");
+        editor.putString("currentSongGenreName",currentSong.getGenre_name()+"");
         editor.putString("currentSongLyrics",currentSong.getLyrics()+"");
+        editor.putString("currentSongArtist",currentSong.getId_artist()+"");
         editor.putInt("checkClick",1);
         editor.commit();
 
