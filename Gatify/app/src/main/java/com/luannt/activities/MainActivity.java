@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -19,11 +20,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -153,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         getListSong();
         getUserDetail(email);
         getAllComment();
-
         //notification cho media
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
             createChannel();
@@ -162,6 +164,38 @@ public class MainActivity extends AppCompatActivity {
         }
         //
         sharedPref= this.getSharedPreferences("CurrentSongPreferences", Context.MODE_PRIVATE);
+        //sự kiện cho bottom sheet
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        playBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bottomSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED){
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+        commentSheetBehavior = BottomSheetBehavior.from(commentSheet);
+        openComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commentSheet.setVisibility(View.VISIBLE);
+                edtComment.setEnabled(true);
+                edtComment.requestFocus();
+                commentSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                if(commentSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                    //tự động mở Keyboard
+                    InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                }else {
+                    commentSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
         //tạo luồng cho media
         this.runOnUiThread(new Thread(new Runnable() {
             @Override
@@ -198,6 +232,9 @@ public class MainActivity extends AppCompatActivity {
                 }else {
                     imgCurrentSongPic.setRotation(0);
                     btnPlay.setImageResource(R.drawable.ic_play);
+                }
+                if(bottomSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED){
+                    commentSheet.setVisibility(View.GONE);
                 }
             }
         }));
@@ -238,37 +275,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
-            }
-        });
-        //sự kiện cho bottom sheet
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        playBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(bottomSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED){
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                }else {
-                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
-            }
-        });
-
-        commentSheetBehavior = BottomSheetBehavior.from(commentSheet);
-        openComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(commentSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED){
-                    commentSheet.setVisibility(View.VISIBLE);
-                    edtComment.setEnabled(true);
-                    edtComment.requestFocus();
-                    commentSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    //tự động mở Keyboard
-                    InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-                }else {
-                    commentSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }
             }
         });
 
@@ -341,6 +347,7 @@ public class MainActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) MainActivity.this.getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
             edtComment.clearFocus();
+
         }
     }
     // tạo notification
@@ -376,6 +383,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+    //
     //gọi api lấy danh sách comment
     public void getAllComment(){
         if(currentSong==null){}
@@ -625,6 +633,7 @@ public class MainActivity extends AppCompatActivity {
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
         }
+
         if(commentSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED
                 &&bottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED) {
             commentSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -635,7 +644,6 @@ public class MainActivity extends AppCompatActivity {
                 &&bottomSheetBehavior.getState()!=BottomSheetBehavior.STATE_EXPANDED) {
             Toast.makeText(this, "Ấn 2 lần để thoát", Toast.LENGTH_SHORT).show();
         }
-
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 
 
@@ -644,5 +652,21 @@ public class MainActivity extends AppCompatActivity {
                 doubleBackToExitPressedOnce=false;
             }
         }, 1000);
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if ( v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int)event.getRawX(), (int)event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent( event );
     }
 }
